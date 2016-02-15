@@ -53,7 +53,9 @@ var obj = {//object
 
 console.log(obj.prop.getFullname());//skilar ut Aurelio De Rosa því það er það sem functionið skilar samkvæmt this bendingunni
 
-var test = obj.prop.getFullname;//Þetta er eitthvað shit
+var test = obj.prop.getFullname;
+//þetta skilgreinir test sem bara getullfuname functionið og þá fær það ekki object probertyinn tvö
+//semsagt ef það er kallað i það mun það kalla i this.fullname og þá væri this global og þá kemur fullnamið "John doe"
 
 console.log(test());//sem virkar svo skringilega og eg skil það ekki
 
@@ -94,19 +96,19 @@ console.log(ferdinand.name); //þetta ætti að virka með rettum koða enn þa�
 // a) Reyndu að greina kóðann t.d. með að setja console.log() í kóðann til að fá frekari upplýsingar
 // b) Notaðu debugger í chromeDeveloper eða firebug. (breakpoint á ákveðnum línum til að geta skoðað gildi)
 
-function numberToString(n, base) {
-  var result = "", sign = "";
-  if (n < 0) {
-    sign = "-";
-    n = -n;
+function numberToString(n, base) {//aðferð sem tekur inn tölu, og baseið
+  var result = "", sign = "";//skilgreinir tvær breytur sem string til að nota
+  if (n < 0) {//ef n er minna enn null
+    sign = "-";//bætir við strenginn - merki
+    n = -n;//segir að n sjé minus sjalfur sig, semsagt ef n er -10 verður n 10
   }
-  do {
-    result = String(n % base) + result;
-    n /= base;
-  } while (n > 0);
-  return sign + result;
+  do {//do while n er meira enn 0
+    result = String(n % base) + result;//result verður jafntog modulus af n og base + result sett i strengt
+    n /= base;//svo deilum við n með base
+  } while (n > 0);//kikjum hvort það sjé enþá stærra
+  return sign + result;//returnum svo sign + result strengjunum
 }
-console.log(numberToString(13, 10)); // → 1.5e-3231.3e-3221.3e-3211.3e-3201.3e-3191.3e-3181.3…
+console.log(numberToString(1, 10)); // → 1.5e-3231.3e-3221.3e-3211.3e-3201.3e-3191.3e-3181.3…
 
 
 // 8. 
@@ -115,18 +117,31 @@ console.log(numberToString(13, 10)); // → 1.5e-3231.3e-3221.3e-3211.3e-3201.3e
 //semsagt ef þú skrifar tölu returnar hann tölunni 
 //ef þú hinsvegar skrifar texta returnar hann null
 function promptNumber(question) {
+  //Þetta herna segir að result sjé jafntog svarið við spurninginnu og það vill fá tölu
   var result = Number(prompt(question, ""));
-  if (isNaN(result)) return null;
-  else return result;
+  if (isNaN(result)) return null;//ef það er ekki tala returnar það null
+  else return result;//ef það er tala returnar það result
 }
 
-console.log(promptNumber("How many trees do you see?")); 
+console.log(promptNumber("How many trees do you see?")); //console.logar það sem kemur fra þessari aðferð
 
 
 // 9. 
 //  Útskýrðu hvernig try og catch virkar hér í kóðanum, 
 //  hvað gerir throw keyword og hvað gerist þegar það verður error (útskýra kóðaflæði)
 
+//okeymm koðaflæðið er að það byrjar með skilgreiningu aðferðann og svo keyrsit koðinn
+//Það byrjar i try og prufar að spurja um what sjérðu með aðferðinni look
+//aðferðinni look spyr hvaða átt þú horfir i, með þvi að kalla i promptdirection
+//það tekur inn textann fra look og kikjir hvort þetta sjé left eða right og hendir þvi öllu i lower case
+//ef það er left returnar það L ef það er right returnar það r ef það er ekkert hendir það i throw new error og gefur upplyisingar, þannig ef 
+//það fer til baka með þessar upplysingar verður try ið rangt og þa catchar það skilgreinda errorinn og console.logar hann út
+//ef þú gerir left eða right og það kemur ekki error þá skilar það l eða r
+//i look tjekkar það hvort það sje returnar l og myndi þá skila a house annars skilar það two angry bears, 
+//þegar það er else þá getur promptdirection bara skilað l og r enn engu öðru sem gerir kleyft að nota else i staðinn fyrir else if
+//svo returnar look a house eða two angry bears og þá mun logga það ut frá byrjun 
+
+//Þetta voru vonandi fullnægjandi svör
 function promptDirection(question) {
   var result = prompt(question, "");
   if (result.toLowerCase() == "left") return "L";
